@@ -26,7 +26,7 @@
                          <h1>Buscador de Heroes</h1>
                          <hr>
                          <form>
-                            <input type="text" class="form-control" >
+                            <input type="number" class="form-control" placeholder="Ingresar ID" >
                          </form>
                          <button class="btn btn-success py-2 mt-2 float-end" >Buscar</button>
                     </div>
@@ -36,12 +36,21 @@
                </main>
 
                <section class="text-center mt-2" >
-                <div class="spinner-border d-none" role="status">
+                   <!-- Spinner -->
+                <div class="spinner-border text-primary d-none" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>
-                  <div id="append" class="d-flex justify-content-center"></div>
-               </section>
+                  <div id="append" class="d-flex justify-content-center">
 
+                </div>
+                <div id="chartContainer" ></div>
+               </section>
+                
+               <!-- Alerta -->
+               <div class="alert alert-danger d-none" role="alert">
+                    Debe ingresar un valor mayor a 0
+              </div>
+             
             </div>
         </div>
     </div>
@@ -49,6 +58,7 @@
 
     <!-- JQUERY CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="canvasjs.min.js"></script>
     <script src="app.js" type="module" ></script>
 </body>
 

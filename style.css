@@ -2,10 +2,8 @@
     height: 20rem;
     border-radius: 50%;
 }
-.mi-card{
-    height: 20rem;
-}
+
 .card-img-top{
-    height: 17rem;
+    height: 18rem;
     object-fit:fill;
 }

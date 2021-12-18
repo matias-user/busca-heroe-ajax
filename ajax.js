@@ -11,8 +11,10 @@ export class Ajax{
         
         $('.btn').click( () =>  {
             this.input = document.querySelector('.form-control');
+            // Get a Api
             if( this.input.value > 0 ) this.llamadaAjax( this.input.value );
             else{
+                // Mostrar Spinner
                 document.querySelector('.alert').classList.remove('d-none');  
                 this.input.value = '';
                 setTimeout(() => {
@@ -26,7 +28,7 @@ export class Ajax{
         const img = document.createElement('img');
         const divAppend = document.querySelector('#append');
         const cardBody = document.createElement('div');
-        const { image, name, appearance, biography } = heroe;
+        const { image, name, appearance, biography, powerstats } = heroe;
         const { race, height, weight } = appearance;
         // Limpiar HTML
         divAppend.innerHTML = '';
@@ -36,14 +38,22 @@ export class Ajax{
         cardBody.classList.add('card-body','pt-0');
         cardBody.innerHTML = `
         <div>
-        <h3 class="card-title border-bottom border-primary">${ name }</h3>
-        <ul class="list-group">
-            <li class="list-group-item">Nombre Actor: <strong>${ biography['full-name']}</strong> </li>
-            <li class="list-group-item">Primera aparicion: <strong>${ biography['first-appearance']}</strong> </li>
-            <li class="list-group-item">Raza: <strong>${ ( race == 'null' ) ? 'Sin info': race }</strong> </li>
-            <li class="list-group-item">Altura: <strong>${ (height[1] == '0 cm') ? 'Sin info': height[1]}</strong></li>
-            <li class="list-group-item">Peso: <strong>${ ( weight[1] == '0 kg' ) ? 'Sin info': weight[1]}</li>
-        </ul> </div>` ;
+            <h3 class="card-title border-bottom border-primary">${ name }</h3>
+            <ul class="list-group">
+                <li class="list-group-item">Nombre Actor: <strong>${ biography['full-name']}</strong> </li>
+                <li class="list-group-item">Primera aparicion: <strong>${ biography['first-appearance']}</strong> </li>
+                <li class="list-group-item">Raza: <strong>${ ( race == 'null' ) ? 'Sin info': race }</strong> </li>
+                <li class="list-group-item">Altura: <strong>${ (height[1] == '0 cm') ? 'Sin info': height[1]}</strong></li>
+                <li class="list-group-item">Peso: <strong>${ ( weight[1] == '0 kg' ) ? 'Sin info': weight[1]}</li>        
+                <li class="list-group-item">
+                    <a class="btn btn-success" data-bs-toggle="collapse" 
+                    href="#multiCollapseExample1" role="button" aria-expanded="false" 
+                    aria-controls="multiCollapseExample1"> ${ ( powerstats.intelligence == 'null') ? 'Sin estadisticas': 'Estadisticas de Poder' }</a>
+                </li>        
+                
+
+                </ul> 
+        </div>` ;
         // modificar img
         img.src = image.url;
         img.classList.add('card-img-top');
@@ -79,24 +89,34 @@ export class Ajax{
             }  ) ;
     }
     crearGrafica( heroe ){
+        
+        // Limpiar HTML
+        document.querySelector('#chartContainer').innerHTML = '';
+        
         const { powerstats } = heroe;
         if( powerstats.intelligence === 'null' &&  powerstats.strength === 'null'){
             
             return;
         }
+        // Crando y configurando la grafica
         const chart =  new CanvasJS.Chart('chartContainer',{
             theme: 'light2',
             title:{
                 text: 'Estadisticas de poder'
             },
+            legend:{
+                verticalAlign: "bottom",
+                horizontalAlign: "center"
+              },
+            showInLegend: true,
             data: [
                 {
                     type:"doughnut",
                     dataPoints: [
-                        { label: "Inteligencia", y: Number(powerstats.intelligence) },
-                        { label: "Fuerza", y: Number(powerstats.strength) },
-                        { label: "Velocidad", y: Number(powerstats.speed) },
-                        { label: "Poder", y: Number(powerstats.power)  },
+                        { label: "Inteligencia", y: Number(powerstats.intelligence),indexLabel: powerstats.intelligence + ' Inteligencia'},
+                        { label: "Fuerza", y: Number(powerstats.strength), indexLabel: powerstats.strength + ' Fuerza' },
+                        { label: "Velocidad", y: Number(powerstats.speed), indexLabel: powerstats.speed + ' Velocidad' },
+                        { label: "Poder", y: Number(powerstats.power), indexLabel: powerstats.power + ' Poder' },
                     ]
                 }
             ]

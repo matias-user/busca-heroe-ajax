@@ -28,6 +28,7 @@ export class Ajax{
         const img = document.createElement('img');
         const divAppend = document.querySelector('#append');
         const cardBody = document.createElement('div');
+        // Destructurando respuesta
         const { image, name, appearance, biography, powerstats } = heroe;
         const { race, height, weight } = appearance;
         // Limpiar HTML
